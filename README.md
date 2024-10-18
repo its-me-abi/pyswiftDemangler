@@ -1,5 +1,6 @@
 ## pyswiftDemangler
-it returns normalized symboul name if given mangled swift symboul name as input
+swift programing language symboul demangler / normalizer libarary in  python for windows.
+it uses ctypes to normalize symboul by swift official dll binary
 
 >mangling means symbouls are  converted to another form.
 so demangling/normalizing is needed to programmatically access it or  understand it visually.
