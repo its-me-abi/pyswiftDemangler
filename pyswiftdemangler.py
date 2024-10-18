@@ -15,9 +15,9 @@ class demangler:
     def __init__(self , path = ""):
         self.dll_path = path or self.default_path
         self.libswift = ctypes.WinDLL( self.dll_path )
-        self.get_demangled_name = self.libswift.fnd_get_demangled_name
-        self.get_demangled_name.restype = ctypes.c_int
-        self.get_demangled_name.argtypes = [ctypes.c_char_p,ctypes.c_char_p,ctypes.c_int]
+        self.demangle = self.libswift.fnd_get_demangled_name
+        self.demangle.restype = ctypes.c_int
+        self.demangle.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int]
 
     def get_buffersize(self,max_buffer_size):
         return max_buffer_size or MAX_FUNC_LENGTH
@@ -28,7 +28,7 @@ class demangler:
         ctypes.memmove ( char_array , name, len(name) )
         return char_array
 
-    def normalize( self,name, max_buffer_size = 0 ):
+    def get_demangled_name(self, name, max_buffer_size = 0):
         result,val = self._normalize(name,max_buffer_size )
         if result:
             return val
@@ -36,14 +36,14 @@ class demangler:
     def _normalize( self, name, max_buffer_size = 0 ):
         buffer_size =  self.get_buffersize(max_buffer_size)
         char_array = self.crete_input_array(name,buffer_size)
-        result = self.get_demangled_name (char_array,char_array,buffer_size)
+        result = self.demangle (char_array, char_array, buffer_size)
         return result , char_array.value
 
 def test():
     name = b"_TtuRxs8RunciblerFxWx5Mince6Quince_"
     expected_value = b'<A where A: Swift.Runcible>(A) -> A.Mince.Quince'
 
-    result = demangler().normalize(name)
+    result = demangler().get_demangled_name(name)
     if result:
         print(f"demangled successfully but verifying .. ")
         print(f"   {name} ==  {expected_value}")
