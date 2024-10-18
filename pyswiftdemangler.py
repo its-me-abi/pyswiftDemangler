@@ -1,4 +1,4 @@
-import ctypes,os
+import ctypes,os,argparse
 
 """
 swift programing language symboul demangler / normalizer libarary in  python for windows
@@ -57,8 +57,23 @@ def test():
     else:
         print(f"it is not a mangled swift symboul/function  = {name}")
 
+def get_comandline_args():
+    parser = argparse.ArgumentParser(description="this module returns a demangled swift symboul name if given mangled symboul name as input")
+    parser.add_argument("-n", "--name", help = "provide mangled swift symboul",required=False)
+    parser.add_argument("-t", "--test", help="use this parameter to test hardcoded value  ", type=str, default='',required=False)
+    args = parser.parse_args()
+    return args ,parser
+
 if __name__ == "__main__":
-    test()
+    args,par = get_comandline_args()
+    if args.name :
+        result = demangler().get_demangled_name(args.name.encode())
+        print(result)
+        
+    elif args.test :
+        test()
+    else:
+        par.print_help()
 
 
 
