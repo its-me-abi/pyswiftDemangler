@@ -6,7 +6,7 @@ it uses ctypes to normalize symbol by swift official dll binary
 author : abilash 18/10/2024
 """
 
-MAX_FUNC_LENGTH = 4096 # maximum buffer size for ctypes array.
+MAX_SYMBOL_LENGTH = 4096 # maximum buffer size for ctypes array.
 
 class demangler:
     libname = r".\lib\swiftDemangle.dll"
@@ -20,7 +20,7 @@ class demangler:
         self.demangle.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int]
 
     def get_buffersize(self,max_buffer_size):
-        return max_buffer_size or MAX_FUNC_LENGTH
+        return max_buffer_size or MAX_SYMBOL_LENGTH
 
     def crete_input_array(self,name):
         "returns ctypes buffer for both input "
@@ -44,14 +44,14 @@ class demangler:
 
     def _normalize( self, name, max_buffer_size = 0 ):
         buffer_size =  self.get_buffersize(max_buffer_size)
-        input_char_array = self.crete_input_array(name)
+        input_char_array = self.crete_input_array(name.encode())
         output_char_array = self.crete_output_array(buffer_size)
         result = self.demangle (input_char_array, output_char_array, buffer_size)
         return result , output_char_array.value
 
 def test():
-    name = b"_TtuRxs8RunciblerFxWx5Mince6Quince_"
-    expected_value = b'<A where A: Swift.Runcible>(A) -> A.Mince.Quince'
+    name = "_TtuRxs8RunciblerFxWx5Mince6Quince_"
+    expected_value = '<A where A: Swift.Runcible>(A) -> A.Mince.Quince'
 
     result = demangler().get_demangled_name(name)
     if result:
