@@ -69,7 +69,7 @@ def test():
 
 def get_comandline_args():
     parser = argparse.ArgumentParser(description="this module returns a demangled swift symbol name if given mangled symbol name as input")
-    parser.add_argument("-n", "--name", help = "provide mangled swift symbol",required=False)
+    parser.add_argument("-n", "--name", help = "provide mangled swift symbol")
     parser.add_argument("-t", "--test",nargs='?', help="use this parameter to test hardcoded value  ", type=str, default='',required=False)
     args = parser.parse_args()
     return args ,parser
