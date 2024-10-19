@@ -78,7 +78,7 @@ if __name__ == "__main__":
     args,parser = get_comandline_args()
 
     if args.name :
-        result = demangler().get_demangled_name(args.name.encode())
+        result = demangler().get_demangled_name(args.name)
         if result:
             print(result)
         else:
