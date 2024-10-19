@@ -1,4 +1,4 @@
-import ctypes,os,argparse
+import ctypes,os,argparse,sys
 
 """
 swift programing language symboul demangler / normalizer libarary in  python for windows
@@ -6,7 +6,7 @@ it uses ctypes to normalize symboul by swift official dll binary
 author : abilash 18/10/2024
 """
 
-MAX_FUNC_LENGTH = 4096
+MAX_FUNC_LENGTH = 4096 # maximum buffer size for ctypes array.
 
 class demangler:
     libname = r".\lib\swiftDemangle.dll"
@@ -22,22 +22,32 @@ class demangler:
     def get_buffersize(self,max_buffer_size):
         return max_buffer_size or MAX_FUNC_LENGTH
 
-    def crete_input_array(self,name,buffer_size):
-        "returns ctypes buffer for both input and output"
-        char_array = ( ctypes.c_char * ( buffer_size ))()
+    def crete_input_array(self,name):
+        "returns ctypes buffer for both input "
+        char_array = ( ctypes.c_char * ( len(name)+1 ))()
         ctypes.memmove ( char_array , name, len(name) )
         return char_array
 
+    def crete_output_array(self,buffer_size):
+        "returns ctypes buffer for both input and output"
+        char_array = ( ctypes.c_char * ( buffer_size ))()
+        return char_array
+
     def get_demangled_name(self, name, max_buffer_size = 0):
-        result,val = self._normalize(name,max_buffer_size )
-        if result:
-            return val
+        result_length,val = self._normalize(name,max_buffer_size )
+        if result_length  :
+            target_output_buffer_lenth = self.get_buffersize(max_buffer_size)
+            if result_length > target_output_buffer_lenth:
+                "if result is greater than buffer then rerun the process with target buffer size"
+                result_length, val = self._normalize(name,max_buffer_size = result_length+1)
+            return val.decode()
 
     def _normalize( self, name, max_buffer_size = 0 ):
         buffer_size =  self.get_buffersize(max_buffer_size)
-        char_array = self.crete_input_array(name,buffer_size)
-        result = self.demangle (char_array, char_array, buffer_size)
-        return result , char_array.value
+        input_char_array = self.crete_input_array(name)
+        output_char_array = self.crete_output_array(buffer_size)
+        result = self.demangle (input_char_array, output_char_array, buffer_size)
+        return result , output_char_array.value
 
 def test():
     name = b"_TtuRxs8RunciblerFxWx5Mince6Quince_"
@@ -60,20 +70,26 @@ def test():
 def get_comandline_args():
     parser = argparse.ArgumentParser(description="this module returns a demangled swift symboul name if given mangled symboul name as input")
     parser.add_argument("-n", "--name", help = "provide mangled swift symboul",required=False)
-    parser.add_argument("-t", "--test", help="use this parameter to test hardcoded value  ", type=str, default='',required=False)
+    parser.add_argument("-t", "--test",nargs='?', help="use this parameter to test hardcoded value  ", type=str, default='',required=False)
     args = parser.parse_args()
     return args ,parser
 
 if __name__ == "__main__":
-    args,par = get_comandline_args()
+    args,parser = get_comandline_args()
+
     if args.name :
         result = demangler().get_demangled_name(args.name.encode())
-        print(result)
+        if result:
+            print(result)
+        else:
+            print("")
+            sys.stderr.writelines(f"it is not a mangled swift symboul/function")
         
-    elif args.test :
+    elif  args.test :
         test()
+
     else:
-        par.print_help()
+        parser.print_help()
 
 
 
