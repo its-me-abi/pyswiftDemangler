@@ -3,7 +3,7 @@ import ctypes,os,argparse,sys
 """
 swift programing language symbol demangler / normalizer libarary in  python for windows
 it uses ctypes to normalize symbol by swift official dll binary
-author : abilash 18/10/2024
+author : abilash 18/10/2024 
 """
 
 MAX_SYMBOL_LENGTH = 4096 # maximum buffer size for ctypes array.
@@ -22,14 +22,14 @@ class demangler:
     def get_buffersize(self,max_buffer_size):
         return max_buffer_size or MAX_SYMBOL_LENGTH
 
-    def crete_input_array(self,name):
-        "returns ctypes buffer for both input "
+    def create_input_array(self, name):
+        "returns ctypes buffer for input "
         char_array = ( ctypes.c_char * ( len(name)+1 ))()
         ctypes.memmove ( char_array , name, len(name) )
         return char_array
 
-    def crete_output_array(self,buffer_size):
-        "returns ctypes buffer for both input and output"
+    def create_output_array(self, buffer_size):
+        "returns ctypes buffer for  output"
         char_array = ( ctypes.c_char * ( buffer_size ))()
         return char_array
 
@@ -38,14 +38,14 @@ class demangler:
         if result_length  :
             target_output_buffer_lenth = self.get_buffersize(max_buffer_size)
             if result_length > target_output_buffer_lenth:
-                "if result is greater than buffer then rerun the process with target buffer size"
+                #if result is greater than buffer then rerun the process with target buffer size
                 result_length, val = self._normalize(name,max_buffer_size = result_length+1)
             return val.decode()
 
     def _normalize( self, name, max_buffer_size = 0 ):
         buffer_size =  self.get_buffersize(max_buffer_size)
-        input_char_array = self.crete_input_array(name.encode())
-        output_char_array = self.crete_output_array(buffer_size)
+        input_char_array = self.create_input_array(name.encode())
+        output_char_array = self.create_output_array(buffer_size)
         result = self.demangle (input_char_array, output_char_array, buffer_size)
         return result , output_char_array.value
 
@@ -82,7 +82,6 @@ if __name__ == "__main__":
         if result:
             print(result)
         else:
-            print("")
             sys.stderr.writelines(f"it is not a mangled swift symbol/function")
         
     elif  args.test :
