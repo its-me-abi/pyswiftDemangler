@@ -1,6 +1,6 @@
 ## pyswiftDemangler
 swift programing language symbol demangler / normalizer libarary in  python for windows.
-it uses ctypes to normalize symbol .it uses function provided by swift official binary
+it uses ctypes to communicate with fucntion included in dll file .this dll is included in swift language official installer.
 
 >Mangling means the process where symbols (such as function names or variables) are converted into a different form,
  Demangling, or normalizing, is necessary to programmatically access these symbols or understand them visually.
