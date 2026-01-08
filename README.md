@@ -26,7 +26,7 @@ It uses Python’s `ctypes` to call the official Swift DLL for demangling Swift 
 2. **Setup:**
    - Place `pyswiftdemangler.py` in your project.
    - Ensure `.\lib\swiftDemangle.dll` exists relative to the script, or provide a custom DLL path when initializing.
-     usually nbot need to handle it because it is included in this libarary but if you only copied .py file then make sure dll files are also moved
+     usually no need to handle it manuely because it is included in this libarary but if you only copied .py file then make sure dll files are also moved
 ---
 
 ## Usage
