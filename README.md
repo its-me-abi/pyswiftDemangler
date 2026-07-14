@@ -1,6 +1,6 @@
 # pyswiftdemangler
 
-A **Swift programming language symbol demangler/normalizer library** for Python on Windows.  
+A **Swift programming language symbol demangler/normalizer library** for Python on Windows (unofficial).  
 It uses Python's `ctypes` to call the official Swift DLL for demangling Swift mangled symbols.
 
 **Author:** https://github.com/its-me-abi  
