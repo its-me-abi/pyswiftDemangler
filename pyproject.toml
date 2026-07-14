@@ -10,10 +10,10 @@ readme = "README.md"
 requires-python = ">=3.6"
 license = {text = "MIT"}
 authors = [
-    {name = "Abilash", email = "its-me-abi@github.com"}
+    {name = "its_me_abi", email = "keralaboypypi@keralaboy.anonaddy.com"}
 ]
 maintainers = [
-    {name = "Abilash", email = "its-me-abi@github.com"}
+    {name = "its_me_abi", email = "keralaboypypi@keralaboy.anonaddy.com"}
 ]
 keywords = ["swift", "demangler", "symbol-demangling", "swift-language"]
 classifiers = [
