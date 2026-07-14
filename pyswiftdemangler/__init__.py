@@ -7,5 +7,5 @@ Swift DLL on Windows.
 from .core import demangler
 
 __version__ = "0.1.0"
-__author__ = "Abilash"
+__author__ = "its_me_abi"
 __all__ = ["demangler"]
