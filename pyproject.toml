@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyswiftdemangler"
+version = "0.1.0"
+description = "A Swift programming language symbol demangler/normalizer library for Python on Windows"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "MIT"}
+authors = [
+    {name = "Abilash", email = "its-me-abi@github.com"}
+]
+maintainers = [
+    {name = "Abilash", email = "its-me-abi@github.com"}
+]
+keywords = ["swift", "demangler", "symbol-demangling", "swift-language"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.urls]
+Homepage = "https://github.com/its-me-abi/pyswiftDemangler"
+Repository = "https://github.com/its-me-abi/pyswiftDemangler.git"
+Issues = "https://github.com/its-me-abi/pyswiftDemangler/issues"
+
+[project.scripts]
+pyswiftdemangler = "pyswiftdemangler.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."] 
+include = ["pyswiftdemangler*"]
+
+[tool.setuptools.package-data]
+pyswiftdemangler = ["lib/*.dll"]
