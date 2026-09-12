@@ -6,8 +6,14 @@ It uses Python's `ctypes` to call the official Swift DLL for demangling Swift ma
 **Author:** https://github.com/its-me-abi  
 **Date:** 18/10/2024
 
----
+> currently it is raising error because of courrepted dll file (it was our mistake that we cant fix for now )   
+> please  install swift in computer then provide path of swiftDemangle.dll as argument,otherwise this will not work
 
+```python
+ from pyswiftdemangler import demangler
+ path_to_dll = "C://swift/lib/swiftDemangle.dll"
+ dmanglr =  demangler(path_to_dll)
+```
 ## Features
 
 - Demangles Swift symbol names using the official Swift DLL (`swiftDemangle.dll`).
