@@ -14,6 +14,11 @@ It uses Python's `ctypes` to call the official Swift DLL for demangling Swift ma
  path_to_dll = "C://swift/lib/swiftDemangle.dll"
  dmanglr =  demangler(path_to_dll)
 ```
+
+> ### warning
+> there is a possibiltiy of buffer overflow, because of input value .it may produce demnagled code morethan expected output.  
+> internally ctypes used to create char array with input length so if demanged string becomes big it will overflow array, i dont know much about exploitability.
+> finding another method with output lenth validation needed to findout by reverse engineering dll file (ida decompiler was used by me for this ),or findout it by checking source code
 ## Features
 
 - Demangles Swift symbol names using the official Swift DLL (`swiftDemangle.dll`).
